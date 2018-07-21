@@ -130,9 +130,11 @@ node("JenkinsOnDemand") {
             sh "sbt -DappVersion=${curVersion} it:testOnly"
         } finally {
             def  junitResult=junit testResults: '**/target/test-reports/io.hydrosphere*.xml', allowEmptyResults: true
-            println new JsonBuilder( junitResult ).toPrettyString()
+            writeJSON file: './target/junitResult.json', json: junitResult, pretty: 4
+            sh "cat ./target/junitResult.json"
             def wa=warnings
-            println new JsonBuilder( wa ).toPrettyString()
+            writeJSON file: './target/wa.json', json: wa, pretty: 4
+            sh "cat ./target/wa.json"
         }
     }
     if (isReleaseJob()) {
