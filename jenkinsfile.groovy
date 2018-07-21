@@ -130,11 +130,11 @@ node("JenkinsOnDemand") {
             sh "sbt -DappVersion=${curVersion} it:testOnly"
         } finally {
             def  junitResult=junit testResults: '**/target/test-reports/io.hydrosphere*.xml', allowEmptyResults: true
-            writeYaml file: './target/junitResult.json', data: junitResult
-            sh "cat ./target/junitResult.json"
+            echo "failCount=${junitResult.failCount} skipCount=${junitResult.skipCount} passCount=${junitResult.passCount} totalCount=${junitResult.totalCount}"
+
             def wa=warnings
-            writeYaml file: './target/wa.json', data: wa
-            sh "cat ./target/wa.json"
+            //writeYaml file: './target/wa.json', data: wa
+            //sh "cat ./target/wa.json"
         }
     }
     if (isReleaseJob()) {
