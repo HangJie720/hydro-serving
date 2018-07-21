@@ -1,3 +1,6 @@
+import groovy.json.*
+
+
 def collectTestResults() {
     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml', allowEmptyResults: true])
 }
@@ -127,9 +130,9 @@ node("JenkinsOnDemand") {
             sh "sbt -DappVersion=${curVersion} it:testOnly"
         } finally {
             def  junitResult=junit testResults: '**/target/test-reports/io.hydrosphere*.xml', allowEmptyResults: true
-            echo "${junitResult}"
+            println new JsonBuilder( junitResult ).toPrettyString()
             def wa=warnings
-            echo "${wa}"
+            println new JsonBuilder( wa ).toPrettyString()
         }
     }
     if (isReleaseJob()) {
