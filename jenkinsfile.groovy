@@ -133,7 +133,7 @@ node("JenkinsOnDemand") {
             echo "failCount=${junitResult.failCount} skipCount=${junitResult.skipCount} passCount=${junitResult.passCount} totalCount=${junitResult.totalCount}"
 
             def wa=warnings
-            //writeYaml file: './target/wa.json', data: wa
+            echo wa
             //sh "cat ./target/wa.json"
         }
     }
