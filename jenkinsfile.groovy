@@ -130,10 +130,10 @@ node("JenkinsOnDemand") {
             sh "sbt -DappVersion=${curVersion} it:testOnly"
         } finally {
             def  junitResult=junit testResults: '**/target/test-reports/io.hydrosphere*.xml', allowEmptyResults: true
-            writeJSON file: './target/junitResult.json', json: junitResult, pretty: 4
+            writeYaml file: './target/junitResult.json', data: junitResult
             sh "cat ./target/junitResult.json"
             def wa=warnings
-            writeJSON file: './target/wa.json', json: wa, pretty: 4
+            writeYaml file: './target/wa.json', data: wa
             sh "cat ./target/wa.json"
         }
     }
