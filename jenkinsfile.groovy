@@ -127,9 +127,9 @@ node("JenkinsOnDemand") {
             sh "sbt -DappVersion=${curVersion} it:testOnly"
         } finally {
             def  junitResult=junit testResults: '**/target/test-reports/io.hydrosphere*.xml', allowEmptyResults: true
-            echo junitResult
+            echo "${junitResult}"
             def wa=warnings
-            echo wa
+            echo "${wa}"
         }
     }
     if (isReleaseJob()) {
